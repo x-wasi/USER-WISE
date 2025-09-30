@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Expense Maintainer</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      color: #555;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      transition: all 0.2s ease-in-out;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #6c63ff;
+      outline: none;
+      box-shadow: 0 0 4px rgba(108,99,255,0.5);
+    }
+
+    button {
+      margin-top: 16px;
+      background: #6c63ff;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover:not(:disabled) {
+      background: #5848d3;
+    }
+
+    button:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    #msg {
+      text-align: center;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 20px;
+      color: #444;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        margin: 15px;
+        padding: 20px;
+      }
+      h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📒 Expense Maintainer</h2>
+    <form id="expenseForm">
+      <label>User</label>
+      <select name="user" required>
+        <option value="">-- Select Friend --</option>
+        <option value="wasi">Wasi</option>
+        <option value="masood">Masood</option>
+        <option value="ehsan">Ehsan</option>
+        <option value="junaid">Junaid</option>
+        <option value="hamza">Hamza</option>
+        <option value="bilal">Bilal</option>
+      </select>
+
+      <label>Date</label>
+      <input type="date" name="date">
+
+      <label>Day</label>
+      <input type="number" name="day" placeholder="Enter day expense" min="0">
+
+      <label>Night</label>
+      <input type="number" name="night" placeholder="Enter night expense" min="0">
+
+      <label>Remarks</label>
+      <textarea name="remarks" rows="2" placeholder="Optional notes..."></textarea>
+
+      <button id="submitBtn" type="submit">💾 Save</button>
+    </form>
+    <p id="msg"></p>
+    <footer>© All rights reserved to Mr Wasi</footer>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxjLHG3Ef5k07RgTgUEcNdAzfE5O6kgdBPpz-B3dpJHvvTFkFj2-_SbKufKmghD0SiYXQ/exec"; 
+    const form = document.getElementById("expenseForm");
+    const msg = document.getElementById("msg");
+    const btn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      btn.disabled = true;
+      msg.textContent = "⏳ Saving...";
+      msg.style.color = "black";
+
+      fetch(scriptURL, { method: "POST", body: new FormData(form) })
+        .then(response => response.json())
+        .then(result => {
+          if (result.result === "success") {
+            msg.textContent = "✅ Saved successfully!";
+            msg.style.color = "green";
+            form.reset();
+          } else {
+            msg.textContent = "❌ Error: " + (result.message || "Unknown error");
+            msg.style.color = "red";
+          }
+        })
+        .catch(error => {
+          msg.textContent = "❌ Failed: " + error.message;
+          msg.style.color = "red";
+        })
+        .finally(() => {
+          btn.disabled = false;
+        });
+    });
+  </script>
+</body>
+</html>
