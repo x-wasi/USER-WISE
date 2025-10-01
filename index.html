@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Expense Maintainer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    .left-panel {
+      flex: 1;
+      background: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80") no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      position: relative;
+      transition: background 0.6s ease-in-out;
+    }
+
+    #userDisplay {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 25px 35px;
+      border-radius: 14px;
+      text-align: center;
+      transition: 0.4s ease;
+      max-width: 350px;
+    }
+
+    #userDisplay h1 {
+      font-size: 32px;
+      margin: 0;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    #userDisplay p {
+      margin-top: 10px;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    #userDisplay img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .right-panel {
+      flex: 1;
+      background: #22223b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .form-box {
+      background: #2a2a40;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #1e1e30;
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #6c63ff;
+      outline: none;
+      box-shadow: 0 0 4px rgba(108,99,255,0.7);
+    }
+
+    button {
+      margin-top: 20px;
+      background: linear-gradient(90deg, #6c63ff, #9a63ff);
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #msg {
+      text-align: center;
+      margin-top: 14px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #bbb;
+    }
+
+    @media (max-width: 850px) {
+      body {
+        flex-direction: column;
+      }
+      .left-panel, .right-panel {
+        flex: none;
+        width: 100%;
+        height: auto;
+      }
+      .left-panel {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel" id="leftPanel">
+    <div id="userDisplay">
+      <h1>📒 Expense Maintainer</h1>
+      <p>Track your daily day & night expenses easily</p>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+    <div class="form-box">
+      <h2>Enter Expense</h2>
+      <form id="expenseForm">
+        <label>User</label>
+        <select name="user" id="userSelect" required>
+          <option value="">-- Select Friend --</option>
+          <option value="wasi" data-icon="👑" data-style="color:#ffd700; font-family:'Cursive';" data-pic="https://i.pravatar.cc/100?u=wasi" data-bg="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80">Wasi</option>
+          <option value="masood" data-icon="🦅" data-style="color:#00ffcc; font-weight:bold;" data-bg="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80">Masood</option>
+          <option value="ehsan" data-icon="🔥" data-style="color:#ff6666; font-style:italic;" data-bg="https://images.unsplash.com/photo-1505483531331-307f5f1e6c7f?auto=format&fit=crop&w=1400&q=80">Ehsan</option>
+          <option value="junaid" data-icon="⚡" data-style="color:#66ccff; font-family:'Georgia';" data-bg="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80">Junaid</option>
+          <option value="hamza" data-icon="🌙" data-style="color:#ccccff;" data-bg="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80">Hamza</option>
+          <option value="bilal" data-icon="🎯" data-style="color:#99ff99; font-weight:bold;" data-bg="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80">Bilal</option>
+        </select>
+
+        <label>Date</label>
+        <input type="date" name="date">
+
+        <label>Day</label>
+        <input type="number" name="day" placeholder="Enter day expense" min="0">
+
+        <label>Night</label>
+        <input type="number" name="night" placeholder="Enter night expense" min="0">
+
+        <label>Remarks</label>
+        <textarea name="remarks" rows="2" placeholder="Optional notes..."></textarea>
+
+        <button type="submit" id="submitBtn">💾 Save</button>
+      </form>
+      <p id="msg"></p>
+      <footer>© All rights reserved to Mr Wasi</footer>
+    </div>
+  </div>
+
+  <script>
+    const userSelect = document.getElementById("userSelect");
+    const userDisplay = document.getElementById("userDisplay");
+    const leftPanel = document.getElementById("leftPanel");
+
+    userSelect.addEventListener("change", function () {
+      const selected = this.options[this.selectedIndex];
+      const name = selected.text;
+      const icon = selected.getAttribute("data-icon");
+      const style = selected.getAttribute("data-style");
+      const pic = selected.getAttribute("data-pic");
+      const bg = selected.getAttribute("data-bg");
+
+      if (this.value) {
+        if (bg) leftPanel.style.background = `url('${bg}') no-repeat center center/cover`;
+
+        if (pic) {
+          userDisplay.innerHTML = `
+            <img src="${pic}" alt="${name}">
+            <h1 style="${style}">${name}</h1>
+            <p>Welcome back! Let’s track your expenses.</p>
+          `;
+        } else {
+          userDisplay.innerHTML = `
+            <h1 style="${style}">${icon} ${name}</h1>
+            <p>Welcome back! Let’s track your expenses.</p>
+          `;
+        }
+      } else {
+        leftPanel.style.background = "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80') no-repeat center center/cover";
+        userDisplay.innerHTML = `
+          <h1>📒 Expense Maintainer</h1>
+          <p>Track your daily day & night expenses easily</p>
+        `;
+      }
+    });
+
+    // (Optional) Form submission (Google Apps Script)
+    const scriptURL = "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE";
+    const form = document.getElementById("expenseForm");
+    const msg = document.getElementById("msg");
+    const btn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      btn.disabled = true;
+      msg.textContent = "⏳ Saving...";
+      msg.style.color = "white";
+
+      fetch(scriptURL, { method: "POST", body: new FormData(form) })
+        .then(response => response.json())
+        .then(result => {
+          if (result.result === "success") {
+            msg.textContent = "✅ Saved successfully!";
+            msg.style.color = "lightgreen";
+            form.reset();
+          } else {
+            msg.textContent = "❌ Error: " + (result.message || "Unknown error");
+            msg.style.color = "red";
+          }
+        })
+        .catch(error => {
+          msg.textContent = "❌ Failed: " + error.message;
+          msg.style.color = "red";
+        })
+        .finally(() => {
+          btn.disabled = false;
+        });
+    });
+  </script>
+
+</body>
+</html>
